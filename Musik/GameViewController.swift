@@ -17,9 +17,17 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        stage = view as! SKView
+        stage = view as? SKView
         stage.ignoresSiblingOrder = true
         presentScene()
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let gameScene = GameScene()
+            gameScene.size = CGSize(width: 1920, height: 1080)
+            gameScene.scaleMode = .aspectFill
+            stage.presentScene(gameScene)
     }
     
     private func presentScene() {
