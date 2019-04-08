@@ -12,6 +12,10 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    private var gameManager = GameManager()
+    
+    private var scoreLabel: SKLabelNode!
+    
     private var velocity: Double = 600
     private var square: SKSpriteNode!
     var arrows = [Arrow]()
@@ -20,7 +24,7 @@ class GameScene: SKScene {
     var physicsDetection = PhysicsDetection()
     
     override func didMove(to view: SKView) {
-        addBackground()
+        setupComponents()
         playGame()
         physicsWorld.gravity = CGVector.zero
         addGestures()
@@ -31,17 +35,12 @@ class GameScene: SKScene {
     
     private func addGestures() {
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
-        
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
         leftSwipe.direction = .left
-        
         let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
         downSwipe.direction = .down
-        
         let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
         upSwipe.direction = .up
-        
-        
         self.view?.addGestureRecognizer(rightSwipe)
         self.view?.addGestureRecognizer(leftSwipe)
         self.view?.addGestureRecognizer(downSwipe)
@@ -70,13 +69,11 @@ class GameScene: SKScene {
         
     }
     
-    
-    private func addBackground() {
-        let background = SKSpriteNode(imageNamed: "background")
+    private func setupComponents() {
+        let background = SKSpriteNode(imageNamed: "background-1")
         addChild(background)
         background.zPosition = 0
         background.position = .zero
-        
         square = SKSpriteNode(imageNamed: "square")
         square.zPosition = 5
         square.position = .zero
@@ -86,6 +83,14 @@ class GameScene: SKScene {
         square.physicsBody?.collisionBitMask = ColliderMask.none
         square.physicsBody?.contactTestBitMask = ColliderMask.arrow
         addChild(square)
+        
+        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel.fontSize = 94
+        scoreLabel.text = String(gameManager.points)
+        scoreLabel.alpha = 0.8
+        scoreLabel.zPosition = 6
+        scoreLabel.position = CGPoint(x: 0, y: 400)
+        addChild(scoreLabel)
 
     }
 
@@ -114,13 +119,19 @@ class GameScene: SKScene {
     }
         
     private func moveArrow() {
-        
     }
     
     override func update(_ currentTime: TimeInterval) {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        playGame()
+        if !gameManager.gameFinished{
+            if !gameManager.gameStarted {
+                playGame()
+                gameManager.gameStarted = true
+            } else {
+                
+            }
+        }
     }
 }

@@ -18,16 +18,8 @@ class MenuScene: SKScene {
         addBackground()
     }
     
-    private func addGestures() {
-        let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swiped:")
-        swipeRecognizer.direction = .right
-        self.view?.addGestureRecognizer(swipeRecognizer)
-        if swipeRecognizer.direction == .right {
-        }
-    }
-    
     private func addBackground() {
-        let background = SKSpriteNode(imageNamed: "background")
+        let background = SKSpriteNode(imageNamed: "background-1")
         addChild(background)
         background.zPosition = 0
         background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)

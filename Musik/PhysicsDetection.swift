@@ -15,7 +15,10 @@ struct ColliderMask {
 }
 
 class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
+    var collision: UInt32!
+    var contact: SKPhysicsContact!
     func didBegin(_ contact: SKPhysicsContact) {
+        self.contact = contact
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == ColliderMask.arrow | ColliderMask.gestureBox {
             print("entrou na caixa")

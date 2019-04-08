@@ -24,11 +24,19 @@ class GameViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let gameManager = GameManager()
         let gameScene = GameScene()
-        gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        gameScene.size = CGSize(width: 1920, height: 1080)
-        gameScene.scaleMode = .aspectFill
-        stage.presentScene(gameScene)
+        
+        if !gameManager.gameFinished {
+            if !gameManager.gameStarted {
+                gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                gameScene.size = CGSize(width: 1920, height: 1080)
+                gameScene.scaleMode = .aspectFill
+                stage.presentScene(gameScene)
+                gameManager.gameStarted = true
+            }
+        }
+
     }
     
     private func presentScene() {

@@ -10,6 +10,8 @@ import Foundation
 
 class GameManager {
     
+    var gameStarted: Bool = false
+    var gameFinished: Bool = false
     var points: Int = 100
     
     func correctNote() {
