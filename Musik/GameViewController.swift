@@ -12,22 +12,23 @@ import GameplayKit
 
 class GameViewController: UIViewController {
 
-    
     var stage: SKView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         stage = view as? SKView
         stage.ignoresSiblingOrder = true
+        stage.showsNodeCount = true
+        stage.showsPhysics = true
         presentScene()
     }
     
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let gameScene = GameScene()
-            gameScene.size = CGSize(width: 1920, height: 1080)
-            gameScene.scaleMode = .aspectFill
-            stage.presentScene(gameScene)
+        gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        gameScene.size = CGSize(width: 1920, height: 1080)
+        gameScene.scaleMode = .aspectFill
+        stage.presentScene(gameScene)
     }
     
     private func presentScene() {
