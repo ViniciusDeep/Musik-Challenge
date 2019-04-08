@@ -25,7 +25,6 @@ class MenuScene: SKScene {
         self.view?.addGestureRecognizer(swipeRecognizer)
         if swipeRecognizer.direction == .right {
         }
-        
     }
     
     private func addBackground() {
