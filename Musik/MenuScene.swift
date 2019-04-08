@@ -13,6 +13,7 @@ import TVUIKit
 class MenuScene: SKScene {
     
     var startGameButton: SKSpriteNode!
+    private var gameManager = GameManager()
     
     override func didMove(to view: SKView) {
         addBackground()
@@ -42,6 +43,7 @@ class MenuScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         removeAllChildren()
     }
     

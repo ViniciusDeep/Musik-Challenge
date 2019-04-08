@@ -10,24 +10,24 @@ import Foundation
 
 class GameManager {
     
-    var gameStarted: Bool = false
-    var gameFinished: Bool = false
-    var points: Int = 100
+    static var gameStarted: Bool = false
+    static var gameFinished: Bool = false
+    static var points: Int = 100
     
     func correctNote() {
-        points += 5
+        GameManager.points += 5
     }
     
     func wrongNote() {
-        if points == 0 {
+        if GameManager.points == 0 {
             gameOver()
             return
         }
-        points -= 10
+        GameManager.points -= 10
     }
     
     func gameOver() {
-        points = 100
+        GameManager.points = 100
     }
     
 }

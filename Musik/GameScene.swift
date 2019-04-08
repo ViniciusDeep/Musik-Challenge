@@ -68,7 +68,6 @@ class GameScene: SKScene {
         }
         
     }
-    
     private func setupComponents() {
         let background = SKSpriteNode(imageNamed: "background-1")
         addChild(background)
@@ -86,7 +85,7 @@ class GameScene: SKScene {
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.fontSize = 94
-        scoreLabel.text = String(gameManager.points)
+        scoreLabel.text = String(GameManager.points)
         scoreLabel.alpha = 0.8
         scoreLabel.zPosition = 6
         scoreLabel.position = CGPoint(x: 0, y: 400)
@@ -125,12 +124,11 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !gameManager.gameFinished{
-            if !gameManager.gameStarted {
+        if !GameManager.gameFinished{
+            if !GameManager.gameStarted {
                 playGame()
-                gameManager.gameStarted = true
+                GameManager.gameStarted = true
             } else {
-                
             }
         }
     }
