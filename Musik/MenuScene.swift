@@ -16,7 +16,6 @@ class MenuScene: SKScene {
     
     override func didMove(to view: SKView) {
         addBackground()
-        addGestures()
     }
     
     private func addGestures() {

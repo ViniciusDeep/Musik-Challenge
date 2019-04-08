@@ -19,29 +19,62 @@ class GameScene: SKScene {
         addBackground()
         playGame()
         physicsWorld.gravity = CGVector.zero
-        
+        addGestures()
     }
+    
+    private func addGestures() {
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
+        
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
+        leftSwipe.direction = .left
+        
+        let downSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
+        downSwipe.direction = .down
+        
+        let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
+        upSwipe.direction = .up
+        
+        
+        self.view?.addGestureRecognizer(rightSwipe)
+        self.view?.addGestureRecognizer(leftSwipe)
+        self.view?.addGestureRecognizer(downSwipe)
+        self.view?.addGestureRecognizer(upSwipe)
+    }
+    
+    @objc private func handleSwiped(sender: UISwipeGestureRecognizer) {
+        if sender.state == .ended {
+            switch (sender.direction) {
+            case .right:
+                print("right")
+                break;
+            case .left:
+                print("left")
+                break;
+            case .up:
+                print("up")
+                break;
+            case .down:
+                print("down")
+                break;
+            default:
+                break;
+            }
+        }
+    }
+    
     
     private func addBackground() {
         let background = SKSpriteNode(imageNamed: "background")
         addChild(background)
         background.zPosition = 0
         background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-        
         square = SKSpriteNode(imageNamed: "square")
         square.zPosition = 5
         square.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         square.size = CGSize(width: 260, height: 260)
         addChild(square)
-        
     }
-    private func addGestures() {
-        let swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swiped:")
-        swipeRecognizer.direction = .right
-        self.view?.addGestureRecognizer(swipeRecognizer)
-        if swipeRecognizer.direction == .right {
-        }
-    }
+   
     private func playGame() {
         let line = SKSpriteNode(imageNamed: "line")
         line.zPosition = 1
@@ -67,9 +100,6 @@ class GameScene: SKScene {
         arrow.physicsBody = SKPhysicsBody(circleOfRadius: self.size.width/2-100)
         arrow.physicsBody?.velocity = CGVector(dx: -velocity, dy: 0)
         deleteArrow()
-    
-    
-    
 //        let duration = Double(arrow.size.width/2)/velocity
 //        let moveArrowAction = SKAction.moveBy(x: -arrow.size.width, y: 0, duration: duration)
 //        let resetXAction = SKAction.moveBy(x: arrow.size.width/2, y: 0, duration: 0)
@@ -79,7 +109,6 @@ class GameScene: SKScene {
 //        playGame()
 //        deleteArrow()
     }
-    
     
     private func deleteArrow() {
         if arrow.position == CGPoint(x: 0, y: self.size.height/2) {
