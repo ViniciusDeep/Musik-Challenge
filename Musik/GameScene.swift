@@ -131,10 +131,10 @@ class GameScene: SKScene {
         
         scoreLabel = SKLabelNode(fontNamed: "LifeSavers-Bold")
         scoreLabel.fontSize = 94
-        scoreLabel.text = String(gameManager.score)
+        scoreLabel.text = "Score: \(gameManager.score)"
         scoreLabel.alpha = 0.8
         scoreLabel.zPosition = 6
-        scoreLabel.position = CGPoint(x: 0, y: 400)
+        scoreLabel.position = CGPoint(x: 0, y: -450)
         addChild(scoreLabel)
         
         
