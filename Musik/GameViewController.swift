@@ -32,7 +32,6 @@ class GameViewController: UIViewController {
                 gameScene.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 gameScene.scaleMode = .aspectFill
                 stage.presentScene(gameScene, transition: .crossFade(withDuration: 0.3))
-                gameManager.gameStarted = true
             }
         }
 

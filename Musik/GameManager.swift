@@ -27,18 +27,25 @@ class GameManager {
     }
     
     func correctNote(_ perfect: Bool = false) {
-        score += perfect ? 10 : 5
-        delegate?.correctNote()
+        if gameStarted {
+            score += perfect ? 10 : 5
+            delegate?.correctNote()
+        }
     }
     
     func wrongNote() {
-        score -= 10
-        delegate?.wrongNote()
+        if gameStarted {
+            score -= 10
+            delegate?.wrongNote()
+        }
     }
     
     func gameOver(win: Bool) {
-        delegate?.gameOver(win: win)
-        if win { score = 0 }
+        if gameFinished {
+            delegate?.gameOver(win: win)
+            if win { score = 0 }
+            gameFinished = true
+        }
     }
     
 }

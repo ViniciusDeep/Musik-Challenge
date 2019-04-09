@@ -13,7 +13,7 @@ class GameScene: SKScene {
     private var scoreLabel: SKLabelNode!
     private var playerSax: SKSpriteNode!
     
-    private let trackSound = SKAction.playSoundFileNamed("Amor Falso.mp3", waitForCompletion: false)
+    private let trackSound = SKAction.playSoundFileNamed("Amor False.mp3", waitForCompletion: false)
     
     var velocity: Double {
         get { return 600 }
@@ -23,7 +23,7 @@ class GameScene: SKScene {
         get { return 0.5 }
     }
     
-    private var square: SKSpriteNode!
+    var square: GestureBox!
     
     var arrows = [Arrow]()
     var audiences = [SKSpriteNode]()
@@ -38,12 +38,12 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         setupComponents()
-        playGame()
         physicsWorld.gravity = CGVector.zero
         addGestures()
         arrows = Arrow.fromJson()
         currentArrow = arrows.first
         physicsWorld.contactDelegate = physicsDetection
+        playGame()
     }
     
     private func addGestures() {
@@ -119,14 +119,8 @@ class GameScene: SKScene {
         line.position = CGPoint(x: 0, y: UIScreen.main.bounds.height/2 - UIScreen.main.bounds.height/4)
         addChild(line)
         
-        square = SKSpriteNode(imageNamed: "match2")
-        square.zPosition = 5
+        square = GestureBox(width: line.size.height, radius: 5)
         square.position = line.position
-        square.size = CGSize(width: line.size.height, height: line.size.height)
-        square.physicsBody = SKPhysicsBody(rectangleOf: square.size)
-        square.physicsBody?.categoryBitMask = ColliderMask.gestureBox
-        square.physicsBody?.collisionBitMask = ColliderMask.none
-        square.physicsBody?.contactTestBitMask = ColliderMask.arrow
         addChild(square)
         
         scoreLabel = SKLabelNode(fontNamed: "LifeSavers-Bold")
@@ -151,6 +145,7 @@ class GameScene: SKScene {
     }
 
     private func playGame() {
+        gameManager.gameStarted = true
         addArrows()
         run(trackSound)
     }
@@ -211,12 +206,14 @@ extension GameScene: GameManagerDelegate {
     
     func correctNote() {
         updateUI()
+        square.highlight(color: .green)
         guard let arrow = arrowInsideBox else { return }
         addRemoveArrowAction(after: 0, arrowToRemove: arrow)
     }
     
     func wrongNote() {
         updateUI()
+        square.highlight(color: .red)
         guard let arrow = arrowInsideBox else { return }
         addRemoveArrowAction(after: 0, arrowToRemove: arrow)
         if audiences.isEmpty { gameManager.gameOver(win: false) }

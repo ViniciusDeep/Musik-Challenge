@@ -13,7 +13,6 @@ import TVUIKit
 class MenuScene: SKScene {
     
     var startGameButton: SKSpriteNode!
-    private var gameManager = GameManager()
     
     override func didMove(to view: SKView) {
         addBackground()
