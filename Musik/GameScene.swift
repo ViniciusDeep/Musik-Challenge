@@ -12,7 +12,7 @@ class GameScene: SKScene {
     private var gameManager = GameManager()
     private var scoreLabel: SKLabelNode!
     
-    private let trackSound = SKAction.playSoundFileNamed("Forró Garage Track.mp3", waitForCompletion: false)
+    private let trackSound = SKAction.playSoundFileNamed("Amor Falso.mp3", waitForCompletion: false)
     
     private let velocity: Double = 600
     private var square: SKSpriteNode!
