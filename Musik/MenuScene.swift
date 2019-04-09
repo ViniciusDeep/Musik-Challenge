@@ -13,22 +13,35 @@ import TVUIKit
 class MenuScene: SKScene {
     
     var startGameButton: SKSpriteNode!
-    private var velocity: Double = 600
-    var arrow: SKSpriteNode!
+    private var gameManager = GameManager()
     
     override func didMove(to view: SKView) {
         addBackground()
     }
     
     private func addBackground() {
-        let background = SKSpriteNode(imageNamed: "background")
-        addChild(background)
+        let background = SKSpriteNode(imageNamed: "menu")
+        background.size = UIScreen.main.bounds.size
         background.zPosition = 0
-        background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-        startGameButton = SKSpriteNode(imageNamed: "startGame")
+        background.position = .zero
+        addChild(background)
+        
+        startGameButton = SKSpriteNode(imageNamed: "play")
+        startGameButton.size = CGSize(width: UIScreen.main.bounds.width/5, height: UIScreen.main.bounds.width/5)
+        startGameButton.zPosition = 2
+        startGameButton.position = .zero
         addChild(startGameButton)
-        startGameButton.zPosition = 1
-        startGameButton.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        
+        let buttonBackground = SKSpriteNode(imageNamed: "raio1")
+        buttonBackground.size = startGameButton.size
+        buttonBackground.setScale(1.2)
+        buttonBackground.zPosition = 1
+        addChild(buttonBackground)
+        
+        var textures: [SKTexture] = []
+        for i in 1...5 { textures.append(SKTexture(imageNamed: "raio\(i)")) }
+        let run = SKAction.animate(with: textures, timePerFrame: 0.1)
+        buttonBackground.run(SKAction.repeatForever(run))
     }
     
     func touchDown(atPoint pos : CGPoint) {
@@ -44,41 +57,17 @@ class MenuScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        startGameButton.alpha = 0
-        playGame()
         
+        removeAllChildren()
     }
     
     override func update(_ currentTime: TimeInterval) {
         
     }
 
-    private func playGame() {
-        let line = SKSpriteNode(imageNamed: "line")
-        line.zPosition = 1
-        line.size = CGSize(width: self.size.width * 2, height: 2000)
-        line.alpha = 0.5
-        line.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
-        addChild(line)
-        addArrows()
-        
-    }
-    private func addArrows() {
-        arrow = SKSpriteNode(imageNamed: "note1")
-        arrow.zPosition = 2
-        arrow.position = CGPoint(x: 1800, y: self.size.height/2)
-        arrow.size = CGSize(width: 100, height: 100)
-        addChild(arrow)
-        moveArrow()
-    }
     
-    private func moveArrow() {
-        let duration = Double(arrow.size.width/2)/velocity
-        let moveArrowAction = SKAction.moveBy(x: -arrow.size.width, y: 0, duration: duration)
-        let resetXAction = SKAction.moveBy(x: arrow.size.width/2, y: 0, duration: 0)
-        let sequenceAction = SKAction.sequence([moveArrowAction, resetXAction])
-        let repeatAction = SKAction.repeatForever(sequenceAction)
-        arrow.run(repeatAction)
-    }
+  
+    
+    
     
 }
