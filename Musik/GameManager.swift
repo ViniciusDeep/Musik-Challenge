@@ -10,6 +10,8 @@ import Foundation
 
 class GameManager {
     
+    
+    
     static var gameStarted: Bool = false
     static var gameFinished: Bool = false
     static var points: Int = 100

@@ -1,10 +1,7 @@
-//
 //  GameScene.swift
 //  Musik
-//
 //  Created by Vinicius Mangueira Correia on 06/04/19.
 //  Copyright © 2019 Vinicius Mangueira Correia. All rights reserved.
-//
 
 import UIKit
 import SpriteKit
@@ -13,10 +10,11 @@ import GameplayKit
 class GameScene: SKScene {
     
     private var gameManager = GameManager()
-    
     private var scoreLabel: SKLabelNode!
     
-    private var velocity: Double = 600
+    private let trackSound = SKAction.playSoundFileNamed("Forró Garage Track.mp3", waitForCompletion: false)
+    
+    private let velocity: Double = 600
     private var square: SKSpriteNode!
     var arrows = [Arrow]()
     var currentArrow: Arrow!
@@ -41,10 +39,18 @@ class GameScene: SKScene {
         downSwipe.direction = .down
         let upSwipe = UISwipeGestureRecognizer(target: self, action: #selector(self.handleSwiped(sender:)))
         upSwipe.direction = .up
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
         self.view?.addGestureRecognizer(rightSwipe)
         self.view?.addGestureRecognizer(leftSwipe)
         self.view?.addGestureRecognizer(downSwipe)
         self.view?.addGestureRecognizer(upSwipe)
+        self.view?.addGestureRecognizer(tap)
+        
+        view?.isUserInteractionEnabled = true
+    }
+    
+    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        print("tap")
     }
     
     @objc private func handleSwiped(sender: UISwipeGestureRecognizer) {
@@ -69,7 +75,7 @@ class GameScene: SKScene {
         
     }
     private func setupComponents() {
-        let background = SKSpriteNode(imageNamed: "background-1")
+        let background = SKSpriteNode(imageNamed: "background")
         addChild(background)
         background.zPosition = 0
         background.position = .zero
@@ -96,11 +102,12 @@ class GameScene: SKScene {
     private func playGame() {
         let line = SKSpriteNode(imageNamed: "line")
         line.zPosition = 1
-        line.size = CGSize(width: self.size.width * 2, height: 2000)
-        line.alpha = 0.5
+        line.size = CGSize(width: self.size.width * 2, height: 1800)
+        line.alpha = 0.8
         line.position = .zero
         addChild(line)
         addArrows()
+        run(trackSound)
     }
     
     private func addArrows() {
@@ -117,8 +124,7 @@ class GameScene: SKScene {
         }
     }
         
-    private func moveArrow() {
-    }
+    private func moveArrow() {}
     
     override func update(_ currentTime: TimeInterval) {
     }

@@ -30,7 +30,7 @@ class GameViewController: UIViewController {
                 gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
                 gameScene.size = CGSize(width: 1920, height: 1080)
                 gameScene.scaleMode = .aspectFill
-                stage.presentScene(gameScene)
+                stage.presentScene(gameScene, transition: .crossFade(withDuration: 0.3))
                 GameManager.gameStarted = true
             }
         }
