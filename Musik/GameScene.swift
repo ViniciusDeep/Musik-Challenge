@@ -18,10 +18,13 @@ class GameScene: SKScene {
     private var square: SKSpriteNode!
     
     var arrows = [Arrow]()
+    var audiences = [SKSpriteNode]()
     
     var currentArrow: Arrow!
     var currentIndex: Int = 0
+    
     var arrowInsideBox: Arrow?
+    var gestured = false
     
     var physicsDetection = PhysicsDetection()
     
@@ -54,6 +57,7 @@ class GameScene: SKScene {
     }
     
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
+        gestured = true
         if let arrowInBox = arrowInsideBox {
             let perfect = isPerfect(arrow: arrowInBox)
             arrowInBox.direction == .tap ? gameManager.correctNote(perfect) : gameManager.wrongNote()
@@ -70,6 +74,7 @@ class GameScene: SKScene {
     }
     
     @objc private func handleSwiped(sender: UISwipeGestureRecognizer) {
+        gestured = true
         if sender.state == .ended {
             if let arrowInBox = arrowInsideBox {
                 
@@ -131,6 +136,7 @@ class GameScene: SKScene {
     
     private func addArrows() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            if self.currentIndex == self.arrows.count - 1 { self.gameOver(win: true) }
             if self.currentIndex < self.arrows.count - 1 {
                 self.currentArrow.sprite.size = CGSize(width: 100, height: 100)
                 self.currentArrow.position = CGPoint(x: -self.size.width/2, y: 0)
@@ -160,15 +166,41 @@ class GameScene: SKScene {
 }
 
 extension GameScene: GameManagerDelegate {
-    func correctNote() {
+    func removeArrow() {
+        if let arrow = arrowInsideBox {
+            var actions = [SKAction]()
+            for _ in 0...10 {
+                let action = SKAction.run { arrow.alpha -= 0.1 }
+                actions.append(action)
+                actions.append(.wait(forDuration: 0.05))
+            }
+            actions.reverse()
+            let remove = SKAction.run {
+                arrow.removeFromParent()
+                self.arrowInsideBox = nil
+            }
+            actions.append(remove)
+            let sequence = SKAction.sequence(actions)
+            arrow.run(sequence)
+        }
+    }
+    
+    func updateUI() {
         scoreLabel.text = "\(gameManager.score)"
+    }
+    
+    func correctNote() {
+        updateUI()
+        removeArrow()
     }
     
     func wrongNote() {
-        scoreLabel.text = "\(gameManager.score)"
+        updateUI()
+        removeArrow()
+        if audiences.isEmpty { gameManager.gameOver(win: false) }
     }
     
-    func gameOver() {
-        scoreLabel.text = "\(gameManager.score)"
+    func gameOver(win: Bool) {
+        updateUI()
     }
 }

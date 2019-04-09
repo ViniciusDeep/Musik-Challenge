@@ -8,25 +8,16 @@
 
 import Foundation
 
-enum CroudStates {
-    case great
-    case good
-    case meh
-    case bad
-    case terrible
-}
-
 protocol GameManagerDelegate {
     func correctNote()
     func wrongNote()
-    func gameOver()
+    func gameOver(win: Bool)
 }
 
 class GameManager {
     
     var gameStarted: Bool = false
     var gameFinished: Bool = false
-    var croudState = CroudStates.meh
     var delegate: GameManagerDelegate?
     
     var score: Int = 0 {
@@ -45,9 +36,9 @@ class GameManager {
         delegate?.wrongNote()
     }
     
-    func gameOver() {
-        score = 100
-        delegate?.gameOver()
+    func gameOver(win: Bool) {
+        delegate?.gameOver(win: win)
+        if win { score = 0 }
     }
     
 }

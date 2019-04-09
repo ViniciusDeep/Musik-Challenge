@@ -39,11 +39,15 @@ class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
             if let arrow = contact.bodyA.node as? Arrow,
                 let scene = arrow.scene as? GameScene {
                 arrow.isInsideGestureBox = false
-                scene.arrowInsideBox = nil
+                if !scene.gestured && arrow.direction != nil { scene.gameManager.wrongNote() }
+                scene.gestured = false
+                scene.removeArrow()
             } else if let arrow = contact.bodyB.node as? Arrow,
                 let scene = arrow.scene as? GameScene {
                 arrow.isInsideGestureBox = false
-                scene.arrowInsideBox = nil
+                if !scene.gestured && arrow.direction != nil { scene.gameManager.wrongNote() }
+                scene.gestured = false
+                scene.removeArrow()
             }
         }
     }
