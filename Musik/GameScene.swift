@@ -11,6 +11,7 @@ class GameScene: SKScene {
     
     var gameManager: GameManager!
     private var scoreLabel: SKLabelNode!
+    private var playerSax: SKSpriteNode!
     
     private let trackSound = SKAction.playSoundFileNamed("Amor Falso.mp3", waitForCompletion: false)
     
@@ -135,6 +136,17 @@ class GameScene: SKScene {
         scoreLabel.zPosition = 6
         scoreLabel.position = CGPoint(x: 0, y: 400)
         addChild(scoreLabel)
+        
+        
+        playerSax = SKSpriteNode(imageNamed: "sax1")
+        playerSax.zPosition = 10
+        playerSax.position = CGPoint(x: 0, y: -100)
+        addChild(playerSax)
+        
+        var textures: [SKTexture] = []
+        for i in 1...5 { textures.append(SKTexture(imageNamed: "sax\(i)")) }
+        let run = SKAction.animate(with: textures, timePerFrame: 0.2)
+        playerSax.run(SKAction.repeatForever(run))
 
     }
 
