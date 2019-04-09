@@ -30,7 +30,7 @@ class Arrow: SKNode {
         self.direction = ArrowType(rawValue: direction)
         
         if let arrow = self.direction {
-            let texture = SKTexture(imageNamed: arrow.rawValue)
+            let texture = SKTexture(imageNamed: "\(arrow.rawValue)")
             sprite = SKSpriteNode(texture: texture)
         } else {
             sprite = SKSpriteNode(texture: nil, color: .clear, size: .zero)

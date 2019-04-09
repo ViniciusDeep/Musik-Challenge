@@ -19,8 +19,6 @@ class GameViewController: UIViewController {
         super.viewDidLoad()
         stage = view as? SKView
         stage.ignoresSiblingOrder = true
-        stage.showsNodeCount = true
-        stage.showsPhysics = true
         presentScene()
     }
     
@@ -31,7 +29,7 @@ class GameViewController: UIViewController {
                 gameManager.delegate = gameScene
                 gameScene.gameManager = gameManager
                 gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-                gameScene.size = CGSize(width: 1920, height: 1080)
+                gameScene.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
                 gameScene.scaleMode = .aspectFill
                 stage.presentScene(gameScene, transition: .crossFade(withDuration: 0.3))
                 gameManager.gameStarted = true
@@ -42,8 +40,9 @@ class GameViewController: UIViewController {
     
     private func presentScene() {
         let scene = MenuScene()
-        scene.size = CGSize(width: 1920, height: 1080)
+        scene.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         scene.scaleMode = .aspectFill
+        scene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         stage.presentScene(scene)
     }
 }

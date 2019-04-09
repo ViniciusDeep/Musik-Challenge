@@ -20,14 +20,28 @@ class MenuScene: SKScene {
     }
     
     private func addBackground() {
-        let background = SKSpriteNode(imageNamed: "background")
-        addChild(background)
+        let background = SKSpriteNode(imageNamed: "menu")
+        background.size = UIScreen.main.bounds.size
         background.zPosition = 0
-        background.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
-        startGameButton = SKSpriteNode(imageNamed: "startGame")
+        background.position = .zero
+        addChild(background)
+        
+        startGameButton = SKSpriteNode(imageNamed: "play")
+        startGameButton.size = CGSize(width: UIScreen.main.bounds.width/5, height: UIScreen.main.bounds.width/5)
+        startGameButton.zPosition = 2
+        startGameButton.position = .zero
         addChild(startGameButton)
-        startGameButton.zPosition = 1
-        startGameButton.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+        
+        let buttonBackground = SKSpriteNode(imageNamed: "raio1")
+        buttonBackground.size = startGameButton.size
+        buttonBackground.setScale(1.2)
+        buttonBackground.zPosition = 1
+        addChild(buttonBackground)
+        
+        var textures: [SKTexture] = []
+        for i in 1...5 { textures.append(SKTexture(imageNamed: "raio\(i)")) }
+        let run = SKAction.animate(with: textures, timePerFrame: 0.1)
+        buttonBackground.run(SKAction.repeatForever(run))
     }
     
     func touchDown(atPoint pos : CGPoint) {

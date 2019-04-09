@@ -12,9 +12,16 @@ class GameScene: SKScene {
     var gameManager: GameManager!
     private var scoreLabel: SKLabelNode!
     
-    private let trackSound = SKAction.playSoundFileNamed("Forró Garage Track.mp3", waitForCompletion: false)
+    private let trackSound = SKAction.playSoundFileNamed("Amor Falso.mp3", waitForCompletion: false)
     
-    private let velocity: Double = 600
+    var velocity: Double {
+        get { return 600 }
+    }
+    
+    var spawnTime: Double {
+        get { return 0.5 }
+    }
+    
     private var square: SKSpriteNode!
     
     var arrows = [Arrow]()
@@ -77,7 +84,6 @@ class GameScene: SKScene {
         gestured = true
         if sender.state == .ended {
             if let arrowInBox = arrowInsideBox {
-                
                 let perfect = isPerfect(arrow: arrowInBox)
                 switch (sender.direction) {
                 case .right:
@@ -99,21 +105,30 @@ class GameScene: SKScene {
     }
     
     private func setupComponents() {
-        let background = SKSpriteNode(imageNamed: "background")
+        let background = SKSpriteNode(imageNamed: "stage")
+        background.size = UIScreen.main.bounds.size
         addChild(background)
         background.zPosition = 0
         background.position = .zero
-        square = SKSpriteNode(imageNamed: "square")
+        
+        let line = SKSpriteNode(imageNamed: "display")
+        line.zPosition = 1
+        let ratio = line.size.height/line.size.width
+        line.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.size.width * ratio)
+        line.position = CGPoint(x: 0, y: UIScreen.main.bounds.height/2 - UIScreen.main.bounds.height/4)
+        addChild(line)
+        
+        square = SKSpriteNode(imageNamed: "match2")
         square.zPosition = 5
-        square.position = .zero
-        square.size = CGSize(width: 260, height: 260)
+        square.position = line.position
+        square.size = CGSize(width: line.size.height, height: line.size.height)
         square.physicsBody = SKPhysicsBody(rectangleOf: square.size)
         square.physicsBody?.categoryBitMask = ColliderMask.gestureBox
         square.physicsBody?.collisionBitMask = ColliderMask.none
         square.physicsBody?.contactTestBitMask = ColliderMask.arrow
         addChild(square)
         
-        scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
+        scoreLabel = SKLabelNode(fontNamed: "LifeSavers-Bold")
         scoreLabel.fontSize = 94
         scoreLabel.text = String(gameManager.score)
         scoreLabel.alpha = 0.8
@@ -124,22 +139,16 @@ class GameScene: SKScene {
     }
 
     private func playGame() {
-        let line = SKSpriteNode(imageNamed: "line")
-        line.zPosition = 1
-        line.size = CGSize(width: self.size.width * 2, height: 1800)
-        line.alpha = 0.8
-        line.position = .zero
-        addChild(line)
         addArrows()
         run(trackSound)
     }
     
     private func addArrows() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + spawnTime) {
             if self.currentIndex == self.arrows.count - 1 { self.gameOver(win: true) }
             if self.currentIndex < self.arrows.count - 1 {
-                self.currentArrow.sprite.size = CGSize(width: 100, height: 100)
-                self.currentArrow.position = CGPoint(x: -self.size.width/2, y: 0)
+                self.currentArrow.sprite.size = CGSize(width: UIScreen.main.bounds.height/10.8, height: UIScreen.main.bounds.height/10.8)
+                self.currentArrow.position = CGPoint(x: -self.size.width/2, y: self.square.position.y)
                 self.addChild(self.currentArrow)
                 self.currentArrow.physicsBody?.velocity.dx = CGFloat(self.velocity)
                 self.currentIndex += 1
@@ -166,22 +175,21 @@ class GameScene: SKScene {
 }
 
 extension GameScene: GameManagerDelegate {
-    func removeArrow() {
-        if let arrow = arrowInsideBox {
-            var actions = [SKAction]()
-            for _ in 0...10 {
-                let action = SKAction.run { arrow.alpha -= 0.1 }
-                actions.append(action)
-                actions.append(.wait(forDuration: 0.05))
+    func addRemoveArrowAction(after: TimeInterval, arrowToRemove: Arrow?) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + after) {
+            if let arrow = arrowToRemove {
+                var actions = [SKAction]()
+                for _ in 0...10 {
+                    let action = SKAction.run { arrow.alpha -= 0.1 }
+                    actions.append(action)
+                    actions.append(.wait(forDuration: 0.05))
+                }
+                actions.reverse()
+                let remove = SKAction.run { arrow.removeFromParent() }
+                actions.append(remove)
+                let sequence = SKAction.sequence(actions)
+                self.run(sequence)
             }
-            actions.reverse()
-            let remove = SKAction.run {
-                arrow.removeFromParent()
-                self.arrowInsideBox = nil
-            }
-            actions.append(remove)
-            let sequence = SKAction.sequence(actions)
-            arrow.run(sequence)
         }
     }
     
@@ -191,12 +199,14 @@ extension GameScene: GameManagerDelegate {
     
     func correctNote() {
         updateUI()
-        removeArrow()
+        guard let arrow = arrowInsideBox else { return }
+        addRemoveArrowAction(after: 0, arrowToRemove: arrow)
     }
     
     func wrongNote() {
         updateUI()
-        removeArrow()
+        guard let arrow = arrowInsideBox else { return }
+        addRemoveArrowAction(after: 0, arrowToRemove: arrow)
         if audiences.isEmpty { gameManager.gameOver(win: false) }
     }
     

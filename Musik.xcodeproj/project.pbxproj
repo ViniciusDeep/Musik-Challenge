@@ -11,6 +11,7 @@
 		3C4A16E7225B7BDF004BDFFD /* Arrows.json in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A16E6225B7BDF004BDFFD /* Arrows.json */; };
 		3C4A16E9225B7C5E004BDFFD /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16E8225B7C5E004BDFFD /* GameManager.swift */; };
 		3C4A16EB225B7C7A004BDFFD /* Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16EA225B7C7A004BDFFD /* Arrow.swift */; };
+		3CC3B983225CF6B300C97586 /* LifeSavers-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CC3B982225CF68C00C97586 /* LifeSavers-Bold.ttf */; };
 		925B4344225C36B2000E6661 /* Despacito.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 925B433F225C36B1000E6661 /* Despacito.mp3 */; };
 		925B4345225C36B2000E6661 /* Safadao E Anitta Track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 925B4340225C36B1000E6661 /* Safadao E Anitta Track.mp3 */; };
 		925B4346225C36B2000E6661 /* Forró Garage Track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 925B4341225C36B1000E6661 /* Forró Garage Track.mp3 */; };
@@ -48,6 +49,7 @@
 		3C4A16E6225B7BDF004BDFFD /* Arrows.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Arrows.json; sourceTree = "<group>"; };
 		3C4A16E8225B7C5E004BDFFD /* GameManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		3C4A16EA225B7C7A004BDFFD /* Arrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrow.swift; sourceTree = "<group>"; };
+		3CC3B982225CF68C00C97586 /* LifeSavers-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "LifeSavers-Bold.ttf"; sourceTree = "<group>"; };
 		925B433F225C36B1000E6661 /* Despacito.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Despacito.mp3; sourceTree = "<group>"; };
 		925B4340225C36B1000E6661 /* Safadao E Anitta Track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Safadao E Anitta Track.mp3"; sourceTree = "<group>"; };
 		925B4341225C36B1000E6661 /* Forró Garage Track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Forró Garage Track.mp3"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		92C50CE322595EC800A32D8F /* Musik */ = {
 			isa = PBXGroup;
 			children = (
+				3CC3B982225CF68C00C97586 /* LifeSavers-Bold.ttf */,
 				925B433E225C3691000E6661 /* Sounds */,
 				92C50CE422595EC800A32D8F /* AppDelegate.swift */,
 				92C50CEA22595EC800A32D8F /* MenuScene.swift */,
@@ -271,6 +274,7 @@
 				3C4A16E7225B7BDF004BDFFD /* Arrows.json in Resources */,
 				925B4347225C36B2000E6661 /* Amor Falso.mp3 in Resources */,
 				92C50CF022595EC800A32D8F /* Main.storyboard in Resources */,
+				3CC3B983225CF6B300C97586 /* LifeSavers-Bold.ttf in Resources */,
 				925B4348225C36B2000E6661 /* Na Sua Cara.mp3 in Resources */,
 				92C50CF222595EC900A32D8F /* Assets.xcassets in Resources */,
 				925B4345225C36B2000E6661 /* Safadao E Anitta Track.mp3 in Resources */,

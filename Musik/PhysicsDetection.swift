@@ -25,10 +25,12 @@ class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
                 let scene = arrow.scene as? GameScene {
                 arrow.isInsideGestureBox = true
                 scene.arrowInsideBox = arrow
+                scene.addRemoveArrowAction(after: scene.velocity * scene.spawnTime/1000, arrowToRemove: arrow)
             } else if let arrow = contact.bodyB.node as? Arrow,
                 let scene = arrow.scene as? GameScene {
                 arrow.isInsideGestureBox = true
                 scene.arrowInsideBox = arrow
+                scene.addRemoveArrowAction(after: scene.velocity * scene.spawnTime/1000, arrowToRemove: arrow)
             }
         }
     }
@@ -41,13 +43,11 @@ class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
                 arrow.isInsideGestureBox = false
                 if !scene.gestured && arrow.direction != nil { scene.gameManager.wrongNote() }
                 scene.gestured = false
-                scene.removeArrow()
             } else if let arrow = contact.bodyB.node as? Arrow,
                 let scene = arrow.scene as? GameScene {
                 arrow.isInsideGestureBox = false
                 if !scene.gestured && arrow.direction != nil { scene.gameManager.wrongNote() }
                 scene.gestured = false
-                scene.removeArrow()
             }
         }
     }
