@@ -21,14 +21,30 @@ class PhysicsDetection: NSObject, SKPhysicsContactDelegate {
         self.contact = contact
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == ColliderMask.arrow | ColliderMask.gestureBox {
-            print("entrou na caixa")
+            if let arrow = contact.bodyA.node as? Arrow,
+                let scene = arrow.scene as? GameScene {
+                arrow.isInsideGestureBox = true
+                scene.arrowInsideBox = arrow
+            } else if let arrow = contact.bodyB.node as? Arrow,
+                let scene = arrow.scene as? GameScene {
+                arrow.isInsideGestureBox = true
+                scene.arrowInsideBox = arrow
+            }
         }
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         if collision == ColliderMask.arrow | ColliderMask.gestureBox {
-            print("saiu da caixa")
+            if let arrow = contact.bodyA.node as? Arrow,
+                let scene = arrow.scene as? GameScene {
+                arrow.isInsideGestureBox = false
+                scene.arrowInsideBox = nil
+            } else if let arrow = contact.bodyB.node as? Arrow,
+                let scene = arrow.scene as? GameScene {
+                arrow.isInsideGestureBox = false
+                scene.arrowInsideBox = nil
+            }
         }
     }
 }

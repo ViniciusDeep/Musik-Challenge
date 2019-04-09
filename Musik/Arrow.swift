@@ -8,25 +8,32 @@
 
 import SpriteKit
 
+enum ArrowType: String {
+    case right = "Right"
+    case left = "Left"
+    case up = "Up"
+    case down = "Down"
+    case tap = "Tap"
+}
+
 class Arrow: SKNode {
     
     var sprite: SKSpriteNode!
-    var direction: String!
+    var direction: ArrowType?
+    var isInsideGestureBox: Bool = false
     
     init(withDirection direction: String) {
         super.init()
         name = "Arrow"
         zPosition = 100
         
-        if direction != "Up"
-        && direction != "Down"
-        && direction != "Right"
-        && direction != "Left"
-        && direction != "Tap" {
-            sprite = SKSpriteNode(texture: nil, color: .clear, size: .zero)
-        } else {
-            let texture = SKTexture(imageNamed: direction)
+        self.direction = ArrowType(rawValue: direction)
+        
+        if let arrow = self.direction {
+            let texture = SKTexture(imageNamed: arrow.rawValue)
             sprite = SKSpriteNode(texture: texture)
+        } else {
+            sprite = SKSpriteNode(texture: nil, color: .clear, size: .zero)
         }
         
         addChild(sprite)
@@ -45,7 +52,9 @@ class Arrow: SKNode {
     }
     
     private func playSound() {
-        SKAction.playSoundFileNamed(direction, waitForCompletion: false)
+        if let arrow = direction?.rawValue {
+            SKAction.playSoundFileNamed(arrow, waitForCompletion: false)
+        }
     }
     
     static func fromJson() -> [Arrow] {

@@ -9,16 +9,20 @@ import GameplayKit
 
 class GameScene: SKScene {
     
-    private var gameManager = GameManager()
+    var gameManager: GameManager!
     private var scoreLabel: SKLabelNode!
     
     private let trackSound = SKAction.playSoundFileNamed("Forró Garage Track.mp3", waitForCompletion: false)
     
     private let velocity: Double = 600
     private var square: SKSpriteNode!
+    
     var arrows = [Arrow]()
+    
     var currentArrow: Arrow!
     var currentIndex: Int = 0
+    var arrowInsideBox: Arrow?
+    
     var physicsDetection = PhysicsDetection()
     
     override func didMove(to view: SKView) {
@@ -50,30 +54,45 @@ class GameScene: SKScene {
     }
     
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        print("tap")
+        if let arrowInBox = arrowInsideBox {
+            let perfect = isPerfect(arrow: arrowInBox)
+            arrowInBox.direction == .tap ? gameManager.correctNote(perfect) : gameManager.wrongNote()
+        } else {
+            gameManager.wrongNote()
+        }
+    }
+    
+    func isPerfect(arrow: Arrow) -> Bool {
+        let hitBoxWidth: CGFloat = 20
+        let right = (square.position.x...(square.position.x + hitBoxWidth/2)).contains(arrow.position.x)
+        let left = ((square.position.x - hitBoxWidth/2)...square.position.x).contains(arrow.position.x)
+        return right || left
     }
     
     @objc private func handleSwiped(sender: UISwipeGestureRecognizer) {
         if sender.state == .ended {
-            switch (sender.direction) {
-            case .right:
-                print("right")
-                break;
-            case .left:
-                print("left")
-                break;
-            case .up:
-                print("up")
-                break;
-            case .down:
-                print("down")
-                break;
-            default:
-                break;
+            if let arrowInBox = arrowInsideBox {
+                
+                let perfect = isPerfect(arrow: arrowInBox)
+                switch (sender.direction) {
+                case .right:
+                    arrowInBox.direction == .right ? gameManager.correctNote(perfect) : gameManager.wrongNote()
+                case .left:
+                    arrowInBox.direction == .left ? gameManager.correctNote(perfect) : gameManager.wrongNote()
+                case .up:
+                    arrowInBox.direction == .up ? gameManager.correctNote(perfect) : gameManager.wrongNote()
+                case .down:
+                    arrowInBox.direction == .down ? gameManager.correctNote(perfect) : gameManager.wrongNote()
+                default:
+                    gameManager.wrongNote()
+                }
+            } else {
+                gameManager.wrongNote()
             }
         }
         
     }
+    
     private func setupComponents() {
         let background = SKSpriteNode(imageNamed: "background")
         addChild(background)
@@ -91,7 +110,7 @@ class GameScene: SKScene {
         
         scoreLabel = SKLabelNode(fontNamed: "Chalkduster")
         scoreLabel.fontSize = 94
-        scoreLabel.text = String(GameManager.points)
+        scoreLabel.text = String(gameManager.score)
         scoreLabel.alpha = 0.8
         scoreLabel.zPosition = 6
         scoreLabel.position = CGPoint(x: 0, y: 400)
@@ -111,12 +130,12 @@ class GameScene: SKScene {
     }
     
     private func addArrows() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
             if self.currentIndex < self.arrows.count - 1 {
                 self.currentArrow.sprite.size = CGSize(width: 100, height: 100)
                 self.currentArrow.position = CGPoint(x: -self.size.width/2, y: 0)
                 self.addChild(self.currentArrow)
-                self.currentArrow.physicsBody?.velocity.dx = 600
+                self.currentArrow.physicsBody?.velocity.dx = CGFloat(self.velocity)
                 self.currentIndex += 1
                 self.currentArrow = self.arrows[self.currentIndex]
                 self.addArrows()
@@ -130,12 +149,26 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !GameManager.gameFinished{
-            if !GameManager.gameStarted {
+        if !gameManager.gameFinished{
+            if !gameManager.gameStarted {
                 playGame()
-                GameManager.gameStarted = true
+                gameManager.gameStarted = true
             } else {
             }
         }
+    }
+}
+
+extension GameScene: GameManagerDelegate {
+    func correctNote() {
+        scoreLabel.text = "\(gameManager.score)"
+    }
+    
+    func wrongNote() {
+        scoreLabel.text = "\(gameManager.score)"
+    }
+    
+    func gameOver() {
+        scoreLabel.text = "\(gameManager.score)"
     }
 }

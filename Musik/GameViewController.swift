@@ -13,6 +13,7 @@ import GameplayKit
 class GameViewController: UIViewController {
 
     var stage: SKView!
+    var gameManager = GameManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,14 +25,16 @@ class GameViewController: UIViewController {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if !GameManager.gameFinished {
-            if !GameManager.gameStarted{
+        if !gameManager.gameFinished {
+            if !gameManager.gameStarted{
                 let gameScene = GameScene()
+                gameManager.delegate = gameScene
+                gameScene.gameManager = gameManager
                 gameScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
                 gameScene.size = CGSize(width: 1920, height: 1080)
                 gameScene.scaleMode = .aspectFill
                 stage.presentScene(gameScene, transition: .crossFade(withDuration: 0.3))
-                GameManager.gameStarted = true
+                gameManager.gameStarted = true
             }
         }
 
