@@ -18,6 +18,8 @@
 		925B4346225C36B2000E6661 /* Forró Garage Track.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 925B4341225C36B1000E6661 /* Forró Garage Track.mp3 */; };
 		925B4347225C36B2000E6661 /* Amor Falso.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 925B4342225C36B2000E6661 /* Amor Falso.mp3 */; };
 		925B4348225C36B2000E6661 /* Na Sua Cara.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 925B4343225C36B2000E6661 /* Na Sua Cara.mp3 */; };
+		926038FB225D6DE800D64E8F /* WrongNote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 926038FA225D6DE800D64E8F /* WrongNote.mp3 */; };
+		926038FD225D948F00D64E8F /* Applause.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 926038FC225D948F00D64E8F /* Applause.mp3 */; };
 		92C50CE522595EC800A32D8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C50CE422595EC800A32D8F /* AppDelegate.swift */; };
 		92C50CEB22595EC800A32D8F /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C50CEA22595EC800A32D8F /* MenuScene.swift */; };
 		92C50CED22595EC800A32D8F /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92C50CEC22595EC800A32D8F /* GameViewController.swift */; };
@@ -57,6 +59,8 @@
 		925B4341225C36B1000E6661 /* Forró Garage Track.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Forró Garage Track.mp3"; sourceTree = "<group>"; };
 		925B4342225C36B2000E6661 /* Amor Falso.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Amor Falso.mp3"; sourceTree = "<group>"; };
 		925B4343225C36B2000E6661 /* Na Sua Cara.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "Na Sua Cara.mp3"; sourceTree = "<group>"; };
+		926038FA225D6DE800D64E8F /* WrongNote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = WrongNote.mp3; sourceTree = "<group>"; };
+		926038FC225D948F00D64E8F /* Applause.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Applause.mp3; sourceTree = "<group>"; };
 		92C50CE122595EC800A32D8F /* Musik.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Musik.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92C50CE422595EC800A32D8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92C50CEA22595EC800A32D8F /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
@@ -102,8 +106,10 @@
 			isa = PBXGroup;
 			children = (
 				925B4342225C36B2000E6661 /* Amor Falso.mp3 */,
+				926038FA225D6DE800D64E8F /* WrongNote.mp3 */,
 				925B433F225C36B1000E6661 /* Despacito.mp3 */,
 				925B4341225C36B1000E6661 /* Forró Garage Track.mp3 */,
+				926038FC225D948F00D64E8F /* Applause.mp3 */,
 				925B4343225C36B2000E6661 /* Na Sua Cara.mp3 */,
 				925B4340225C36B1000E6661 /* Safadao E Anitta Track.mp3 */,
 			);
@@ -273,12 +279,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				926038FB225D6DE800D64E8F /* WrongNote.mp3 in Resources */,
 				925B4346225C36B2000E6661 /* Forró Garage Track.mp3 in Resources */,
 				3C4A16E7225B7BDF004BDFFD /* Arrows.json in Resources */,
 				925B4347225C36B2000E6661 /* Amor Falso.mp3 in Resources */,
 				92C50CF022595EC800A32D8F /* Main.storyboard in Resources */,
 				3CC3B983225CF6B300C97586 /* LifeSavers-Bold.ttf in Resources */,
 				925B4348225C36B2000E6661 /* Na Sua Cara.mp3 in Resources */,
+				926038FD225D948F00D64E8F /* Applause.mp3 in Resources */,
 				92C50CF222595EC900A32D8F /* Assets.xcassets in Resources */,
 				925B4345225C36B2000E6661 /* Safadao E Anitta Track.mp3 in Resources */,
 				925B4344225C36B2000E6661 /* Despacito.mp3 in Resources */,

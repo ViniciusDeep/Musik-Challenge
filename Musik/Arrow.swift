@@ -14,6 +14,7 @@ enum ArrowType: String {
     case up = "Up"
     case down = "Down"
     case tap = "Tap"
+    case end = "Ended"
 }
 
 class Arrow: SKNode {
@@ -30,9 +31,15 @@ class Arrow: SKNode {
         self.direction = ArrowType(rawValue: direction)
         
         if let arrow = self.direction {
+            if arrow.rawValue == "Ended" {
+                print("End game here or when user has ended")
+                let applause = SKAction.playSoundFileNamed("Applause.mp3", waitForCompletion: false)
+                run(applause)
+            }
             let texture = SKTexture(imageNamed: "\(arrow.rawValue)")
             sprite = SKSpriteNode(texture: texture)
-        } else {
+        }
+        else {
             sprite = SKSpriteNode(texture: nil, color: .clear, size: .zero)
         }
         

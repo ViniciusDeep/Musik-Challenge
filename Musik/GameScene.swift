@@ -13,7 +13,7 @@ class GameScene: SKScene {
     private var scoreLabel: SKLabelNode!
     private var playerSax: SKSpriteNode!
     
-    private let trackSound = SKAction.playSoundFileNamed("Amor False.mp3", waitForCompletion: false)
+    private let trackSound = SKAction.playSoundFileNamed("Amor Falso.mp3", waitForCompletion: false)
     
     var velocity: Double {
         get { return 600 }
@@ -201,7 +201,7 @@ extension GameScene: GameManagerDelegate {
     }
     
     func updateUI() {
-        scoreLabel.text = "\(gameManager.score)"
+        scoreLabel.text = "Score: \(gameManager.score)"
     }
     
     func correctNote() {
@@ -212,6 +212,8 @@ extension GameScene: GameManagerDelegate {
     }
     
     func wrongNote() {
+        let wrongNote = SKAction.playSoundFileNamed("WrongNote", waitForCompletion: false)
+        self.run(wrongNote)
         updateUI()
         square.highlight(color: .red)
         guard let arrow = arrowInsideBox else { return }

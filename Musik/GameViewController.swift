@@ -37,7 +37,7 @@ class GameViewController: UIViewController {
 
     }
     
-    private func presentScene() {
+    public func presentScene() {
         let scene = MenuScene()
         scene.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         scene.scaleMode = .aspectFill
